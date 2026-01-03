@@ -1,25 +1,27 @@
-'use client'
+"use client";
 
-import { motion } from 'framer-motion'
-import { useState } from 'react'
-import Container from '@/components/layout/Container'
-import Image from 'next/image'
-import { ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react'
-import { useTranslation } from '@/components/language/useTranslation'
+import { motion } from "framer-motion";
+import { useState } from "react";
+import Container from "@/components/layout/Container";
+import Image from "next/image";
+import { ExternalLink, ChevronLeft, ChevronRight, Quote } from "lucide-react";
+import { useTranslation } from "@/components/language/useTranslation";
 
 export default function Cases() {
-  const { t } = useTranslation()
-  const [currentSlide, setCurrentSlide] = useState(0)
-  
-  const proLutionImages = ['/pl1.png', '/pl2.png', '/pl5.png', '/pl3.png']
+  const { t } = useTranslation();
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  const proLutionImages = ["/pl1.png", "/pl2.png", "/pl5.png", "/pl3.png"];
 
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % proLutionImages.length)
-  }
+    setCurrentSlide((prev) => (prev + 1) % proLutionImages.length);
+  };
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + proLutionImages.length) % proLutionImages.length)
-  }
+    setCurrentSlide(
+      (prev) => (prev - 1 + proLutionImages.length) % proLutionImages.length
+    );
+  };
 
   return (
     <section
@@ -47,9 +49,7 @@ export default function Cases() {
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
             {t.cases.title}
           </h2>
-          <p className="text-gray-300 text-lg">
-            {t.cases.description}
-          </p>
+          <p className="text-gray-300 text-lg">{t.cases.description}</p>
         </motion.div>
 
         {/* Featured Project - ProLution */}
@@ -67,7 +67,7 @@ export default function Cases() {
                 <div
                   key={image}
                   className={`absolute inset-0 transition-opacity duration-500 ${
-                    index === currentSlide ? 'opacity-100' : 'opacity-0'
+                    index === currentSlide ? "opacity-100" : "opacity-0"
                   }`}
                 >
                   <Image
@@ -79,7 +79,7 @@ export default function Cases() {
                   />
                 </div>
               ))}
-              
+
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
 
               {/* Navigation Arrows */}
@@ -90,7 +90,7 @@ export default function Cases() {
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
-              
+
               <button
                 onClick={nextSlide}
                 className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 border border-white/10 flex items-center justify-center text-white hover:bg-black/80 hover:border-white/30 transition-all z-10"
@@ -106,9 +106,9 @@ export default function Cases() {
                     key={index}
                     onClick={() => setCurrentSlide(index)}
                     className={`h-2 rounded-full transition-all ${
-                      index === currentSlide 
-                        ? 'bg-blue-400 w-6' 
-                        : 'bg-white/30 hover:bg-white/60 w-2'
+                      index === currentSlide
+                        ? "bg-blue-400 w-6"
+                        : "bg-white/30 hover:bg-white/60 w-2"
                     }`}
                     aria-label={`Go to slide ${index + 1}`}
                   />
@@ -155,14 +155,46 @@ export default function Cases() {
 
               {/* Tech Stack */}
               <div className="flex flex-wrap gap-2 mb-6">
-                {['WordPress', 'WooCommerce', 'SEO', 'Google Ads'].map((tech) => (
-                  <span
-                    key={tech}
-                    className="px-3 py-1 text-xs bg-white/[0.03] border border-white/10 rounded-lg text-gray-400 font-mono"
-                  >
-                    {tech}
-                  </span>
-                ))}
+                {["WordPress", "WooCommerce", "SEO", "Google Ads"].map(
+                  (tech) => (
+                    <span
+                      key={tech}
+                      className="px-3 py-1 text-xs bg-white/[0.03] border border-white/10 rounded-lg text-gray-400 font-mono"
+                    >
+                      {tech}
+                    </span>
+                  )
+                )}
+              </div>
+
+              {/* Testimonial - NEW! */}
+              <div className="relative bg-gradient-to-br from-blue-500/5 to-cyan-500/5 border border-blue-500/20 rounded-xl p-6 mb-6">
+                <Quote className="absolute top-4 right-4 w-8 h-8 text-blue-500/20" />
+
+                <div className="relative">
+                  <p className="text-gray-200 leading-relaxed mb-4 italic">
+                    "{t.cases.prolution.testimonial.quote}"
+                  </p>
+
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-blue-500/10 border border-blue-500/30 flex items-center justify-center">
+                      <span className="text-blue-400 font-bold text-sm">
+                        {t.cases.prolution.testimonial.author
+                          .split(" ")
+                          .map((n) => n[0])
+                          .join("")}
+                      </span>
+                    </div>
+                    <div>
+                      <div className="font-semibold text-white text-sm">
+                        {t.cases.prolution.testimonial.author}
+                      </div>
+                      <div className="text-xs text-gray-400 font-mono">
+                        {t.cases.prolution.testimonial.role}
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               {/* Link */}
@@ -206,11 +238,12 @@ export default function Cases() {
                 </h3>
 
                 <p className="text-gray-400 text-sm mb-4 leading-relaxed">
-                  Moderne Next.js webshop med Stripe integration og real-time inventory.
+                  Moderne Next.js webshop med Stripe integration og real-time
+                  inventory.
                 </p>
 
                 <div className="flex flex-wrap gap-1.5">
-                  {['Next.js', 'Stripe', 'TypeScript'].map((tech) => (
+                  {["Next.js", "Stripe", "TypeScript"].map((tech) => (
                     <span
                       key={tech}
                       className="px-2 py-0.5 text-xs bg-white/[0.03] border border-white/10 rounded text-gray-500 font-mono"
@@ -248,11 +281,12 @@ export default function Cases() {
                 </h3>
 
                 <p className="text-gray-400 text-sm mb-4 leading-relaxed">
-                  Analytics platform med real-time data visualization og bruger management.
+                  Analytics platform med real-time data visualization og bruger
+                  management.
                 </p>
 
                 <div className="flex flex-wrap gap-1.5">
-                  {['React', 'Node.js', 'PostgreSQL'].map((tech) => (
+                  {["React", "Node.js", "PostgreSQL"].map((tech) => (
                     <span
                       key={tech}
                       className="px-2 py-0.5 text-xs bg-white/[0.03] border border-white/10 rounded text-gray-500 font-mono"
@@ -267,5 +301,5 @@ export default function Cases() {
         </div>
       </Container>
     </section>
-  )
+  );
 }

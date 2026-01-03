@@ -1,39 +1,39 @@
-"use client"
+"use client";
 
-import { useState, useEffect, useMemo } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import Link from "next/link"
-import Container from "@/components/layout/Container"
-import { cn } from "@/lib/utils"
-import { Calendar, Send } from "lucide-react"
-import Logo from "@/components/ui/Logo"
-import LanguageSwitcher from "@/components/language/LanguageSwitcher"
-import LanguageTransition from "@/components/language/LanguageTransition"
-import { useTranslation } from "@/components/language/useTranslation"
+import { useState, useEffect, useMemo } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
+import Container from "@/components/layout/Container";
+import { cn } from "@/lib/utils";
+import { Calendar, Send } from "lucide-react";
+import Logo from "@/components/ui/Logo";
+import LanguageSwitcher from "@/components/language/LanguageSwitcher";
+import LanguageTransition from "@/components/language/LanguageTransition";
+import { useTranslation } from "@/components/language/useTranslation";
 
 export default function Navigation() {
-  const { t } = useTranslation()
-  const [scrolled, setScrolled] = useState(false)
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [activeSection, setActiveSection] = useState("")
+  const { t } = useTranslation();
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
 
   const navItems = useMemo(
     () => [
-      { label: t.nav.projects, href: "#cases" },
       { label: t.nav.services, href: "#services" },
+      { label: t.nav.projects, href: "#cases" },
       { label: t.nav.about, href: "#about" },
       { label: t.nav.contact, href: "#contact" },
     ],
     [t.nav.projects, t.nav.services, t.nav.about, t.nav.contact]
-  )
+  );
 
   // Smooth scroll
   useEffect(() => {
-    document.documentElement.style.scrollBehavior = "smooth"
+    document.documentElement.style.scrollBehavior = "smooth";
     return () => {
-      document.documentElement.style.scrollBehavior = "auto"
-    }
-  }, [])
+      document.documentElement.style.scrollBehavior = "auto";
+    };
+  }, []);
 
   // Track active section
   useEffect(() => {
@@ -41,40 +41,40 @@ export default function Navigation() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setActiveSection(`#${entry.target.id}`)
+            setActiveSection(`#${entry.target.id}`);
           }
-        })
+        });
       },
       {
         threshold: 0.5,
         rootMargin: "-20% 0px -35% 0px",
       }
-    )
+    );
 
     const sections = navItems
       .map((item) => document.querySelector(item.href))
-      .filter(Boolean) as Element[]
+      .filter(Boolean) as Element[];
 
-    sections.forEach((section) => observer.observe(section))
+    sections.forEach((section) => observer.observe(section));
 
-    return () => observer.disconnect()
-  }, [navItems])
+    return () => observer.disconnect();
+  }, [navItems]);
 
   // Lock scroll on mobile menu
   useEffect(() => {
-    document.body.style.overflow = mobileMenuOpen ? "hidden" : ""
+    document.body.style.overflow = mobileMenuOpen ? "hidden" : "";
     return () => {
-      document.body.style.overflow = ""
-    }
-  }, [mobileMenuOpen])
+      document.body.style.overflow = "";
+    };
+  }, [mobileMenuOpen]);
 
   // Scroll shadow
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20)
-    handleScroll()
-    window.addEventListener("scroll", handleScroll, { passive: true })
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const headerClasses = useMemo(
     () =>
@@ -85,14 +85,17 @@ export default function Navigation() {
           : "bg-black/20 backdrop-blur-sm border-transparent"
       ),
     [scrolled]
-  )
+  );
 
   const handleBookMeeting = () => {
-    const calWindow = window as any
+    const calWindow = window as any;
     if (calWindow.Cal) {
-      calWindow.Cal("modal", { calLink: "wisuals/15min", config: { layout: "month_view" } })
+      calWindow.Cal("modal", {
+        calLink: "wisuals/15min",
+        config: { layout: "month_view" },
+      });
     }
-  }
+  };
 
   return (
     <>
@@ -106,7 +109,6 @@ export default function Navigation() {
       >
         <Container>
           <nav className="flex items-center justify-between h-16">
-
             {/* LOGO */}
             <Link
               href="/"
@@ -120,14 +122,16 @@ export default function Navigation() {
             <LanguageTransition>
               <div className="hidden md:flex items-center gap-8">
                 {navItems.map((item) => {
-                  const isActive = activeSection === item.href
+                  const isActive = activeSection === item.href;
                   return (
                     <Link
                       key={item.href}
                       href={item.href}
                       className={cn(
                         "relative text-sm transition-colors duration-200 group outline-none px-1 py-0.5",
-                        isActive ? "text-white" : "text-gray-300 hover:text-white"
+                        isActive
+                          ? "text-white"
+                          : "text-gray-300 hover:text-white"
                       )}
                     >
                       {item.label}
@@ -138,7 +142,7 @@ export default function Navigation() {
                         )}
                       />
                     </Link>
-                  )
+                  );
                 })}
               </div>
             </LanguageTransition>
@@ -178,7 +182,10 @@ export default function Navigation() {
             >
               <div className="absolute inset-0 flex flex-col justify-center gap-1.5">
                 <motion.span
-                  animate={{ rotate: mobileMenuOpen ? 45 : 0, y: mobileMenuOpen ? 6 : 0 }}
+                  animate={{
+                    rotate: mobileMenuOpen ? 45 : 0,
+                    y: mobileMenuOpen ? 6 : 0,
+                  }}
                   className="w-full h-px bg-white"
                 />
                 <motion.span
@@ -186,7 +193,10 @@ export default function Navigation() {
                   className="w-full h-px bg-white"
                 />
                 <motion.span
-                  animate={{ rotate: mobileMenuOpen ? -45 : 0, y: mobileMenuOpen ? -6 : 0 }}
+                  animate={{
+                    rotate: mobileMenuOpen ? -45 : 0,
+                    y: mobileMenuOpen ? -6 : 0,
+                  }}
                   className="w-full h-px bg-white"
                 />
               </div>
@@ -213,9 +223,8 @@ export default function Navigation() {
               <Container>
                 <LanguageTransition>
                   <div className="py-4 space-y-1">
-
                     {navItems.map((item, index) => {
-                      const isActive = activeSection === item.href
+                      const isActive = activeSection === item.href;
                       return (
                         <motion.div
                           key={item.href}
@@ -228,13 +237,15 @@ export default function Navigation() {
                             onClick={() => setMobileMenuOpen(false)}
                             className={cn(
                               "block py-3 transition-colors",
-                              isActive ? "text-white font-medium" : "text-gray-300 hover:text-white"
+                              isActive
+                                ? "text-white font-medium"
+                                : "text-gray-300 hover:text-white"
                             )}
                           >
                             {item.label}
                           </Link>
                         </motion.div>
-                      )
+                      );
                     })}
 
                     {/* CTA + LANGUAGE */}
@@ -251,8 +262,8 @@ export default function Navigation() {
 
                       <button
                         onClick={() => {
-                          handleBookMeeting()
-                          setMobileMenuOpen(false)
+                          handleBookMeeting();
+                          setMobileMenuOpen(false);
                         }}
                         className="block w-full px-4 py-2 text-center border border-white/10 text-white rounded-lg hover:bg-white/[0.05] hover:border-white/20 font-medium flex items-center justify-center gap-2"
                       >
@@ -275,5 +286,5 @@ export default function Navigation() {
         )}
       </AnimatePresence>
     </>
-  )
+  );
 }
